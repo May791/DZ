@@ -15,7 +15,7 @@ import {
   Download, 
   Bot, 
   Settings, 
-  Chart,
+  BarChart3 as Chart,
   Calendar,
   Filter,
   Zap,
