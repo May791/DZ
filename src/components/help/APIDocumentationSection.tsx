@@ -19,6 +19,7 @@ import {
   Zap
 } from 'lucide-react';
 import { DocumentViewerModal } from '@/components/modals/DocumentViewerModal';
+import { ApiTestingModal } from '@/components/modals/ApiTestingModal';
 
 export function APIDocumentationSection() {
   // États pour les modales métier
@@ -460,15 +461,19 @@ curl -X POST "/api/auth/login" \\
         />
       )}
 
+      {/* Modale de test API */}
+      {showApiTestModal && (
+        <ApiTestingModal
+          isOpen={showApiTestModal}
+          onClose={() => setShowApiTestModal(false)}
+        />
+      )}
+
       {/* Modale de test sandbox */}
       {showSandboxModal && (
-        <DocumentViewerModal
+        <ApiTestingModal
           isOpen={showSandboxModal}
           onClose={() => setShowSandboxModal(false)}
-          document={{
-            title: "Environnement Sandbox",
-            content: "Interface de test dans l'environnement sandbox - Testez vos requêtes API en toute sécurité."
-          }}
         />
       )}
     </div>

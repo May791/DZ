@@ -221,7 +221,12 @@ export function CustomFormLibrary() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => console.log('Modifier:', template.id)}
+                        onClick={() => {
+                          // Ouvrir l'éditeur de modèle
+                          window.dispatchEvent(new CustomEvent('edit-template', {
+                            detail: { templateId: template.id, templateTitle: template.title }
+                          }));
+                        }}
                       >
                         <Edit className="w-4 h-4" />
                       </Button>

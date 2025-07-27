@@ -40,6 +40,8 @@ import {
   BarChart3
 } from 'lucide-react';
 import { DocumentViewerModal } from '@/components/modals/DocumentViewerModal';
+import { AdminUserManagementModal } from '@/components/modals/AdminUserManagementModal';
+import { VideoPlayerModal } from '@/components/modals/VideoPlayerModal';
 
 export function AdminGuideSection() {
   console.log('AdminGuideSection rendering...');
@@ -53,6 +55,40 @@ export function AdminGuideSection() {
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [currentVideo, setCurrentVideo] = useState<any>(null);
+  
+  // Import des nouvelles modales
+  const [showApiTestModal, setShowApiTestModal] = useState(false);
+  
+  // Handlers pour les actions administrateur
+  const handleUserManagement = () => {
+    setShowUserManagementModal(true);
+  };
+
+  const handleManualBackup = () => {
+    setShowBackupModal(true);
+  };
+
+  const handleSystemReports = () => {
+    setShowReportsModal(true);
+  };
+
+  const handleConfiguration = () => {
+    setShowConfigModal(true);
+  };
+  
+  const handlePlayVideo = (article: any) => {
+    setCurrentVideo({
+      id: article.id,
+      title: article.title,
+      description: article.description,
+      duration: article.duration,
+      instructor: "Expert Technique",
+      category: "Formation Administrateur",
+      thumbnail: "/api/placeholder/640/360",
+      difficulty: article.complexity
+    });
+    setShowVideoModal(true);
+  };
 
   const adminModules = [
     {
@@ -1168,13 +1204,9 @@ export function AdminGuideSection() {
 
       {/* Modale de gestion des utilisateurs */}
       {showUserManagementModal && (
-        <DocumentViewerModal
+        <AdminUserManagementModal
           isOpen={showUserManagementModal}
           onClose={() => setShowUserManagementModal(false)}
-          document={{
-            title: "Gestion des utilisateurs",
-            content: "Interface de gestion des utilisateurs - Création, modification, suppression et attribution des rôles et permissions."
-          }}
         />
       )}
 
@@ -1216,13 +1248,10 @@ export function AdminGuideSection() {
 
       {/* Modale de lecture vidéo */}
       {showVideoModal && currentVideo && (
-        <DocumentViewerModal
+        <VideoPlayerModal
           isOpen={showVideoModal}
           onClose={() => setShowVideoModal(false)}
-          document={{
-            title: `Tutoriel: ${currentVideo.title}`,
-            content: `Lecture du tutoriel vidéo: ${currentVideo.title}\n\nDurée: ${currentVideo.duration}\n\nInterface de lecture vidéo avec contrôles et navigation.`
-          }}
+          video={currentVideo}
         />
       )}
     </div>

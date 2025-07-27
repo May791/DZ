@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { NewTemplateModal } from '@/components/modals/NewTemplateModal';
 import { DocumentViewerModal } from '@/components/modals/DocumentViewerModal';
+import { DocumentTemplatesModal } from '@/components/modals/DocumentTemplatesModal';
+import { CollaborativeEditorModal } from '@/components/modals/CollaborativeEditorModal';
 
 export function DocumentTemplatesSection() {
   // Ajout de l'état pour les modales métier
@@ -99,13 +101,10 @@ export function DocumentTemplatesSection() {
     <div className="space-y-8">
       {/* Modale de visualisation de modèles */}
       {showTemplateModal && templateCategory && (
-        <DocumentViewerModal
+        <DocumentTemplatesModal
           isOpen={showTemplateModal}
           onClose={() => setShowTemplateModal(false)}
-          document={{
-            title: `Modèles de la catégorie : ${templateCategory}`,
-            content: `Ici s'affichent les modèles de la catégorie "${templateCategory}". (À remplacer par un vrai listing métier)`
-          }}
+          category={templateCategory}
         />
       )}
       {/* Modale de création de modèle */}
@@ -122,13 +121,9 @@ export function DocumentTemplatesSection() {
       )}
       {/* Modale d'édition collaborative */}
       {showCollaborativeEditor && (
-        <DocumentViewerModal
+        <CollaborativeEditorModal
           isOpen={showCollaborativeEditor}
           onClose={() => setShowCollaborativeEditor(false)}
-          document={{
-            title: "Éditeur collaboratif",
-            content: "Interface d'édition collaborative en temps réel - Travaillez ensemble sur vos documents juridiques avec des outils de révision et commentaires."
-          }}
         />
       )}
       {/* Categories */}

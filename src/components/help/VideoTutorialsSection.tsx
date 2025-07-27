@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { buttonHandlers } from '@/utils/buttonUtils';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { VideoPlayerModal } from '@/components/modals/VideoPlayerModal';
 import { 
   Play, 
   Search, 
@@ -24,6 +25,8 @@ import {
 export function VideoTutorialsSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
 
   const videoCategories = [
     { id: 'all', label: 'Tous', count: 25 },
@@ -314,9 +317,17 @@ export function VideoTutorialsSection() {
               <Button 
                 className="w-full mt-3"
                 onClick={() => {
-                  window.dispatchEvent(new CustomEvent('play-video-tutorial', { 
-                    detail: { tutorialId: video.id, title: video.title }
-                  }));
+                  setSelectedVideo({
+                    id: video.id.toString(),
+                    title: video.title,
+                    description: video.description,
+                    duration: video.duration,
+                    instructor: video.instructor,
+                    category: video.category,
+                    thumbnail: video.thumbnail,
+                    difficulty: video.level
+                  });
+                  setShowVideoModal(true);
                 }}
               >
                 <Play className="w-4 h-4 mr-2" />
@@ -364,6 +375,15 @@ export function VideoTutorialsSection() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modale de lecture vidéo */}
+      {showVideoModal && selectedVideo && (
+        <VideoPlayerModal
+          isOpen={showVideoModal}
+          onClose={() => setShowVideoModal(false)}
+          video={selectedVideo}
+        />
+      )}
     </div>
   );
 }
