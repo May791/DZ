@@ -9,9 +9,13 @@ import { SearchTab } from '../ai/SearchTab';
 import { Brain, Globe, Zap, TestTube, Sparkles, Search } from 'lucide-react';
 import { UnifiedSectionHeader } from '@/components/common/UnifiedSectionHeader';
 import { TabFormField } from '@/components/common/TabFormField';
+import { SemanticSearchModal } from '@/components/modals/SemanticSearchModal';
 
 export function NextGenSearchSection() {
   const [activeTab, setActiveTab] = useState("ai-search");
+  const [showSemanticModal, setShowSemanticModal] = useState(false);
+  const [showConceptModal, setShowConceptModal] = useState(false);
+  const [showImmersiveModal, setShowImmersiveModal] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -45,12 +49,12 @@ export function NextGenSearchSection() {
         <TabsContent value="semantic">
           <TabFormField
             placeholder="Recherche sémantique et conceptuelle..."
-            onSearch={(query) => console.log('Recherche sémantique:', query)}
-            onAdd={() => console.log('Nouveau concept')}
-            onFilter={() => console.log('Filtrer concepts')}
-            onSort={() => console.log('Trier concepts')}
-            onExport={() => console.log('Exporter résultats')}
-            onRefresh={() => console.log('Actualiser recherche')}
+            onSearch={(query) => setShowSemanticModal(true)}
+            onAdd={() => setShowConceptModal(true)}
+            onFilter={() => setShowSemanticModal(true)}
+            onSort={() => setShowSemanticModal(true)}
+            onExport={() => setShowSemanticModal(true)}
+            onRefresh={() => setShowSemanticModal(true)}
             showActions={true}
           />
           <SemanticSearchSection />
@@ -59,12 +63,12 @@ export function NextGenSearchSection() {
         <TabsContent value="immersive">
           <TabFormField
             placeholder="Interface de recherche immersive..."
-            onSearch={(query) => console.log('Recherche immersive:', query)}
-            onAdd={() => console.log('Nouvelle vue')}
-            onFilter={() => console.log('Filtrer vues')}
-            onSort={() => console.log('Trier vues')}
-            onExport={() => console.log('Exporter visualisation')}
-            onRefresh={() => console.log('Actualiser interface')}
+            onSearch={(query) => setShowImmersiveModal(true)}
+            onAdd={() => setShowImmersiveModal(true)}
+            onFilter={() => setShowImmersiveModal(true)}
+            onSort={() => setShowImmersiveModal(true)}
+            onExport={() => setShowImmersiveModal(true)}
+            onRefresh={() => setShowImmersiveModal(true)}
             showActions={true}
           />
           <ImmersiveSearchInterface />
@@ -103,6 +107,34 @@ export function NextGenSearchSection() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modales de recherche */}
+      {showSemanticModal && (
+        <SemanticSearchModal
+          isOpen={showSemanticModal}
+          onClose={() => setShowSemanticModal(false)}
+          searchType="semantic"
+          title="Recherche Sémantique Avancée"
+        />
+      )}
+
+      {showConceptModal && (
+        <SemanticSearchModal
+          isOpen={showConceptModal}
+          onClose={() => setShowConceptModal(false)}
+          searchType="concept"
+          title="Analyse Conceptuelle"
+        />
+      )}
+
+      {showImmersiveModal && (
+        <SemanticSearchModal
+          isOpen={showImmersiveModal}
+          onClose={() => setShowImmersiveModal(false)}
+          searchType="similarity"
+          title="Interface Immersive de Recherche"
+        />
+      )}
     </div>
   );
 }

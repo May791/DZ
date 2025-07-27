@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EnhancedInput } from '@/components/common/EnhancedInput';
 import { Brain, Network, Quote, Search, Link, Eye, Download } from 'lucide-react';
+import { SemanticSearchModal } from '@/components/modals/SemanticSearchModal';
 
 interface ConceptualResult {
   id: string;
@@ -22,6 +23,9 @@ export function SemanticSearchSection() {
   const [activeTab, setActiveTab] = useState("concepts");
   const [results, setResults] = useState<ConceptualResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showCitationModal, setShowCitationModal] = useState(false);
+  const [showGraphModal, setShowGraphModal] = useState(false);
+  const [showSimilarityModal, setShowSimilarityModal] = useState(false);
 
   const mockResults: ConceptualResult[] = [
     {
@@ -185,10 +189,7 @@ export function SemanticSearchSection() {
                 </p>
                 <Button 
                   className="bg-blue-600 hover:bg-blue-700"
-                  onClick={() => {
-                    console.log('Launching citation analysis');
-                    window.dispatchEvent(new CustomEvent('start-citation-analysis'));
-                  }}
+                  onClick={() => setShowCitationModal(true)}
                 >
                   <Search className="w-4 h-4 mr-2" />
                   Lancer l'analyse des citations
@@ -215,10 +216,7 @@ export function SemanticSearchSection() {
                 </p>
                 <Button 
                   className="bg-green-600 hover:bg-green-700"
-                  onClick={() => {
-                    console.log('Opening graph view');
-                    window.dispatchEvent(new CustomEvent('open-graph-view'));
-                  }}
+                  onClick={() => setShowGraphModal(true)}
                 >
                   <Network className="w-4 h-4 mr-2" />
                   Ouvrir la vue graphique
@@ -245,10 +243,7 @@ export function SemanticSearchSection() {
                 </p>
                 <Button 
                   className="bg-orange-600 hover:bg-orange-700"
-                  onClick={() => {
-                    console.log('Analyzing similarities');
-                    window.dispatchEvent(new CustomEvent('analyze-similarities'));
-                  }}
+                  onClick={() => setShowSimilarityModal(true)}
                 >
                   <Brain className="w-4 h-4 mr-2" />
                   Analyser les similitudes
@@ -258,6 +253,34 @@ export function SemanticSearchSection() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Modales de recherche sémantique */}
+      {showCitationModal && (
+        <SemanticSearchModal
+          isOpen={showCitationModal}
+          onClose={() => setShowCitationModal(false)}
+          searchType="citation"
+          title="Analyse des Citations Juridiques"
+        />
+      )}
+
+      {showGraphModal && (
+        <SemanticSearchModal
+          isOpen={showGraphModal}
+          onClose={() => setShowGraphModal(false)}
+          searchType="semantic"
+          title="Vue Graphique des Relations"
+        />
+      )}
+
+      {showSimilarityModal && (
+        <SemanticSearchModal
+          isOpen={showSimilarityModal}
+          onClose={() => setShowSimilarityModal(false)}
+          searchType="similarity"
+          title="Analyse de Similarité Juridique"
+        />
+      )}
     </div>
   );
 }

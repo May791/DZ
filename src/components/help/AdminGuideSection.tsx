@@ -443,31 +443,7 @@ export function AdminGuideSection() {
     document.body.removeChild(link);
   };
 
-  // Fonction de gestion des utilisateurs
-  const handleUserManagement = () => {
-    setShowUserManagementModal(true);
-  };
 
-  // Fonction de sauvegarde manuelle
-  const handleManualBackup = () => {
-    setShowBackupModal(true);
-  };
-
-  // Fonction de rapports système
-  const handleSystemReports = () => {
-    setShowReportsModal(true);
-  };
-
-  // Fonction de configuration
-  const handleConfiguration = () => {
-    setShowConfigModal(true);
-  };
-
-  // Fonction de lecture vidéo
-  const handlePlayVideo = (video: any) => {
-    setCurrentVideo(video);
-    setShowVideoModal(true);
-  };
 
   return (
     <div className="space-y-6">
