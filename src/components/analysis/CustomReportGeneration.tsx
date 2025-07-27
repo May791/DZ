@@ -1,12 +1,18 @@
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Bot, Sparkles, FileText, FileSpreadsheet, FileImage } from 'lucide-react';
+import { ReportGenerationModal } from '@/components/modals/ReportGenerationModal';
 
 export function CustomReportGeneration() {
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [showPdfModal, setShowPdfModal] = useState(false);
+  const [showExcelModal, setShowExcelModal] = useState(false);
+  const [showWordModal, setShowWordModal] = useState(false);
   return (
     <div className="space-y-6">
       <Card>
@@ -95,10 +101,7 @@ export function CustomReportGeneration() {
                 </h4>
                 <Button 
                   className="w-full bg-blue-600 hover:bg-blue-700 mb-3"
-                  onClick={() => {
-                    console.log('Generating report with AI');
-                    window.dispatchEvent(new CustomEvent('generate-ai-report'));
-                  }}
+                  onClick={() => setShowAiModal(true)}
                 >
                   <Bot className="w-4 h-4 mr-2" />
                   Générer avec IA
@@ -113,10 +116,7 @@ export function CustomReportGeneration() {
                     variant="outline" 
                     size="sm" 
                     className="flex-1"
-                    onClick={() => {
-                      console.log('Exporting to PDF');
-                      window.dispatchEvent(new CustomEvent('export-pdf'));
-                    }}
+                    onClick={() => setShowPdfModal(true)}
                   >
                     <FileText className="w-4 h-4 mr-1" />
                     PDF
@@ -125,10 +125,7 @@ export function CustomReportGeneration() {
                     variant="outline" 
                     size="sm" 
                     className="flex-1"
-                    onClick={() => {
-                      console.log('Exporting to Excel');
-                      window.dispatchEvent(new CustomEvent('export-excel'));
-                    }}
+                    onClick={() => setShowExcelModal(true)}
                   >
                     <FileSpreadsheet className="w-4 h-4 mr-1" />
                     Excel
@@ -137,10 +134,7 @@ export function CustomReportGeneration() {
                     variant="outline" 
                     size="sm" 
                     className="flex-1"
-                    onClick={() => {
-                      console.log('Exporting to Word');
-                      window.dispatchEvent(new CustomEvent('export-word'));
-                    }}
+                    onClick={() => setShowWordModal(true)}
                   >
                     <FileImage className="w-4 h-4 mr-1" />
                     Word
@@ -160,6 +154,43 @@ export function CustomReportGeneration() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modales de génération de rapports */}
+      {showAiModal && (
+        <ReportGenerationModal
+          isOpen={showAiModal}
+          onClose={() => setShowAiModal(false)}
+          reportType="ai"
+          title="Génération de Rapport avec IA"
+        />
+      )}
+
+      {showPdfModal && (
+        <ReportGenerationModal
+          isOpen={showPdfModal}
+          onClose={() => setShowPdfModal(false)}
+          reportType="pdf"
+          title="Export PDF Personnalisé"
+        />
+      )}
+
+      {showExcelModal && (
+        <ReportGenerationModal
+          isOpen={showExcelModal}
+          onClose={() => setShowExcelModal(false)}
+          reportType="excel"
+          title="Export Excel Avancé"
+        />
+      )}
+
+      {showWordModal && (
+        <ReportGenerationModal
+          isOpen={showWordModal}
+          onClose={() => setShowWordModal(false)}
+          reportType="word"
+          title="Export Word Formaté"
+        />
+      )}
     </div>
   );
 }
