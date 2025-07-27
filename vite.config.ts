@@ -11,16 +11,11 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       port: 8080,
     },
-    // En-têtes de sécurité renforcés (niveau 9.8/10)
+    // En-têtes de sécurité optimisés pour le développement
     headers: {
       'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
+      'X-Frame-Options': 'SAMEORIGIN',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
-      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-      'X-DNS-Prefetch-Control': 'off',
-      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none';"
     },
   },
   define: {
