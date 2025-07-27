@@ -8,15 +8,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    hmr: {
-      port: 8080,
-    },
-    // En-têtes de sécurité optimisés pour le développement
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'SAMEORIGIN',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
-    },
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode),
